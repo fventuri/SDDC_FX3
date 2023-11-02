@@ -1,6 +1,6 @@
 /*
  * Project Name: SDDC_GPIF.cyfx
- * Time : 10/29/2020 18:17:08
+ * Time : 11/01/2023 22:01:47
  * Device Type: FX3
  * Project Type: GPIF2
  *
@@ -13,29 +13,35 @@
  * 
  */
 
-#ifndef _INCLUDED_SDDC_FX3_
-#define _INCLUDED_SDDC_FX3_
+#ifndef _INCLUDED_SDDC_FX3-FRANCO_
+#define _INCLUDED_SDDC_FX3-FRANCO_
 #include "cyu3types.h"
 #include "cyu3gpif.h"
 
 /* Summary
    Number of states in the state machine
  */
-#define CY_NUMBER_OF_STATES 10
+#define CY_NUMBER_OF_STATES 16
 
 /* Summary
    Mapping of user defined state names to state indices
  */
 #define RESET 0
 #define TH0_RD 2
-#define TH0_RD_LD 4
-#define TH1_RD_LD 3
-#define TH1_RD 6
-#define TH1_BUSY 7
-#define TH1_WAIT 8
-#define TH0_BUSY 5
-#define TH0_WAIT 9
+#define TH0_RD_LD 5
+#define TH1_RD_LD 8
+#define TH1_RD 11
+#define TH1_BUSY 9
+#define TH1_WAIT 14
+#define TH0_BUSY 6
+#define TH0_WAIT 15
 #define IDLE 1
+#define TH0_TH1_SKIP 4
+#define TH1_LD_SKIP 10
+#define TH1_TH0_SKIP 13
+#define TH0_LD_SKIP 7
+#define TH0_SKIP 3
+#define TH1_SKIP 12
 
 
 /* Summary
@@ -48,7 +54,7 @@
    Transition function values used in the state machine.
  */
 uint16_t CyFxGpifTransition[]  = {
-    0x0000, 0xAAAA, 0x5555, 0xFFFF, 0x3333
+    0x0000, 0xAAAA, 0x5555, 0xFFFF
 };
 
 /* Summary
@@ -59,20 +65,25 @@ uint16_t CyFxGpifTransition[]  = {
  */
 CyU3PGpifWaveData CyFxGpifWavedata[]  = {
     {{0x1E739E01,0x00000100,0x80000000},{0x00000000,0x00000000,0x00000000}},
-    {{0x2E739A04,0x20010002,0x80000080},{0x00000000,0x00000000,0x00000000}},
-    {{0x1E739A03,0x24000104,0x80000080},{0x00000000,0x00000000,0x00000000}},
-    {{0x1E73D406,0x24000108,0x80000040},{0x3E739C07,0x00000000,0x80000100}},
-    {{0x3E739C05,0x00000000,0x80000100},{0x1E739402,0x20000100,0x80000040}},
-    {{0x1E739A09,0x00000100,0x80000000},{0x00000000,0x00000000,0x00000000}},
-    {{0x2E739A04,0x20010002,0x80000080},{0x1E739E01,0x00000100,0x80000000}},
-    {{0x1E739A08,0x04000100,0x80000000},{0x00000000,0x00000000,0x00000000}}
+    {{0x2E739A05,0x20000002,0x80000080},{0x00000000,0x00000000,0x00000000}},
+    {{0x3E739C03,0x00000100,0x80000000},{0x3E739C04,0x00000100,0x80000000}},
+    {{0x2E739402,0x20000002,0x80000040},{0x00000000,0x00000000,0x00000000}},
+    {{0x2E739A08,0x24000002,0x80000080},{0x00000000,0x00000000,0x00000000}},
+    {{0x3E739C06,0x00000000,0x80000100},{0x3E739C07,0x00000100,0x80000000}},
+    {{0x1E739A0F,0x00000100,0x80000000},{0x00000000,0x00000000,0x00000000}},
+    {{0x3E739C09,0x00000000,0x80000100},{0x3E739C0A,0x00000100,0x80000000}},
+    {{0x1E739A0E,0x04000100,0x80000000},{0x00000000,0x00000000,0x00000000}},
+    {{0x2E73940B,0x24000002,0x80000040},{0x00000000,0x00000000,0x00000000}},
+    {{0x2E739E0C,0x00010002,0x80000000},{0x1E739E0D,0x00000104,0x80000000}},
+    {{0x1E739E01,0x00000100,0x80000000},{0x2E73940B,0x24000002,0x80000040}},
+    {{0x2E739A05,0x20000002,0x80000080},{0x1E739E01,0x00000100,0x80000000}}
 };
 
 /* Summary
    Table that maps state indices to the descriptor table indices.
  */
 uint8_t CyFxGpifWavedataPosition[]  = {
-    0,1,2,3,4,5,6,7,2,1
+    0,1,2,3,4,5,6,3,7,8,9,10,11,12,4,1
 };
 
 /* Summary
@@ -170,4 +181,4 @@ const CyU3PGpifConfig_t CyFxGpifConfig  = {
     CyFxGpifRegValue
 };
 
-#endif   /* _INCLUDED_HF103_FX3_ */
+#endif   /* _INCLUDED_SDDC_FX3-FRANCO_ */
