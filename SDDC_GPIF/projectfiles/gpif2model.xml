@@ -7,7 +7,7 @@
       <SPIEnabled>False</SPIEnabled>
       <I2SEnabled>False</I2SEnabled>
       <ADMuxedEnabled>False</ADMuxedEnabled>
-      <InterfaceType>Slave</InterfaceType>
+      <InterfaceType>Master</InterfaceType>
       <CommunicationType>Synchronous</CommunicationType>
       <ClockSource>External</ClockSource>
       <ClockEdge>Positive</ClockEdge>
