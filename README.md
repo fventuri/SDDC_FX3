@@ -16,4 +16,4 @@ Original version: https://github.com/ik1xpv/ExtIO_sddc
 
 ## License
 
-MIT - see (LICENSE.txt)[LICENSE.txt]
+MIT - see [LICENSE.txt](LICENSE.txt)
