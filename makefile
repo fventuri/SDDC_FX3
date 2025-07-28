@@ -26,7 +26,7 @@ MODULE = SDDC_FX3
 
 all:$(MODULE).img
 
-USER_CFLAGS = -I./radio -I./driver
+USER_CFLAGS = -I./radio -I./driver -std=c99
 
 vpath %.c driver
 vpath %.c radio
