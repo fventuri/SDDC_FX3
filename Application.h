@@ -67,7 +67,7 @@
 #define ENDPOINT_BURST_SIZE	(1024)
 #define INFINITE_TRANSFER_SIZE			 (0)
 
-#define APP_THREADS						 (1)
+#define APP_THREADS						 (2)
 // void null_func(uint8_t, ...)  // redefine DebugPrint if required
 extern void DebugPrint2USB ( uint8_t priority, char *msg, ...);
 

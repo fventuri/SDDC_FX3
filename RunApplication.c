@@ -140,6 +140,27 @@ void MsgParsing(uint32_t qevent)
 	}
 }
 
+void watchdog_thread(uint32_t input)
+{
+    DebugPrint(4, "@(#) v1.0.3 20 second watchdog timeout\n");
+    uint32_t last_dma_count = 0;
+    uint32_t seconds=0;
+    CyU3PSysWatchDogConfigure(true, 1000 * 20);
+    for(;;)
+    {
+	if (glDMACount > last_dma_count)
+	    CyU3PSysWatchDogClear();
+
+	/* if (seconds<100) */
+	/* 	 CyU3PSysWatchDogClear(); */
+
+	last_dma_count = glDMACount;
+	CyU3PThreadSleep(1000);
+	++seconds;
+	DebugPrint(4, "%d seconds, DMA count: %d ticks: %d\r\n", seconds, glDMACount, tx_time_get());
+    }
+}
+
 void ApplicationThread ( uint32_t input)
 {
 	// input is passed to this routine from CyU3PThreadCreate, useful if the same code is used for multiple threads
@@ -329,6 +350,19 @@ void CyFxApplicationDefine (void) {
                           FIFO_THREAD_STACK,               /* App Thread stack size */
                           FIFO_THREAD_PRIORITY,            /* App Thread priority */
                           FIFO_THREAD_PRIORITY,            /* App Thread pre-emption threshold */
+                          CYU3P_NO_TIME_SLICE,                     /* No time slice for the application thread */
+                          CYU3P_AUTO_START                         /* Start the thread immediately */
+                          );
+
+    StackPtr[1] = CyU3PMemAlloc (FIFO_THREAD_STACK);
+    Status = CyU3PThreadCreate (&ThreadHandle[1],                  /* Slave FIFO app thread structure */
+                          "12:TEST",                     /* Thread ID and thread name */
+                          watchdog_thread,                   /* Slave FIFO app thread entry function */
+                          0,                                       /* No input parameter to thread */
+                          StackPtr[1],                                     /* Pointer to the allocated thread stack */
+                          FIFO_THREAD_STACK,               /* App Thread stack size */
+                          FIFO_THREAD_PRIORITY-1,            /* App Thread priority */
+                          FIFO_THREAD_PRIORITY-1,            /* App Thread pre-emption threshold */
                           CYU3P_NO_TIME_SLICE,                     /* No time slice for the application thread */
                           CYU3P_AUTO_START                         /* Start the thread immediately */
                           );
